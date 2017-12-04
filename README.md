@@ -5,7 +5,7 @@
 1. Execute `composer install & ./bin/phing build-dev` is project root folder.
 1. Copy `platform/sites/default/default.settings.php` to `platform/sites/default/settings.php` and update `$databases` variable.
 1. Drop current database `drush sql-drop` and import production dump with `drush sql-cli < /PATH/TO/DUMP/FILE.sql`
-1. Execute `drush rr & drush cc all & drush updb -y`.
+1. Execute `drush rr; drush cc all; drush updb -y; drush php-eval "_nexteuropa_ecl_migrate_blocks()";`.
 1. Edit (create if not exists) `page.tpl.php` and add html for `Site header`, `Page header basic` and `Footers`
 1. Add menus and search form in the page using regions/blocks or via template.php (preprocess_page hook)
  
