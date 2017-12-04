@@ -1,0 +1,24 @@
+/* fixes need if using ECL 0.18.0 - check if still needed in newer versions */
+.ecl-container {
+  line-height: 1.15;
+}
+.ecl-site-header__banner label {
+  margin-bottom: 0;
+}
+.ecl-page-header a:link,
+.ecl-page-header a:visited,
+.ecl-page-header a:hover,
+.ecl-page-header a:active,
+.ecl-footer__site-corporate a:link,
+.ecl-footer__site-corporate a:visited,
+.ecl-footer__site-corporate a:hover,
+.ecl-footer__site-corporate a:active
+.ecl-footer__ec a:link,
+.ecl-footer__ec a:visited,
+.ecl-footer__ec a:hover,
+.ecl-footer__ec a:active {
+  color: #fff;
+}
+.ecl-container h4 {
+  font-weight: 700;
+}
