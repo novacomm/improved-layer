@@ -1,0 +1,62 @@
+<?php
+
+/**
+ * File contains module functions needed for implementation of the Improved layer.
+ */
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Apply needed customizations for the search form "nexteuropa_europa_search_search".
+ */
+function YOUR_CORE_FEATURE_form_nexteuropa_europa_search_search_form_alter(&$form, &$form_state, $form_id) {
+  // Remove textfield placeholder.
+  unset($form['search_input_group']['QueryText']['#attributes']['placeholder']);
+  // Unset any prefix.
+  unset($form['search_input_group']['#prefix']);
+  // Unset any suffix.
+  unset($form['search_input_group']['#suffix']);
+  // Set textfield size to 15 (default is 60).
+  $form['search_input_group']['QueryText']['#size'] = 15;
+  // Set input type for submit button.
+  $form['search_input_group']['europa_search_submit']['#type'] = 'button';
+  // Add flag to theme function so to apply only on this button.
+  $form['search_input_group']['europa_search_submit']['#ecl-buttontype'] = 'button';
+  // Set css classes on form.
+  $form['#attributes']['class'] = ['ecl-search-form', 'ecl-site-header__search'];
+  // Set css classes on textfield.
+  $form['search_input_group']['QueryText']['#attributes']['class'] = array('ecl-text-input', 'ecl-search-form__textfield');
+  // Set title for textfield.
+  $form['search_input_group']['QueryText']['#attributes']['title'] = t('Search');
+  // Set theme wrapper so to remove default div wrapper for textfield.
+  $form['search_input_group']['QueryText']['#theme_wrappers'] = array('YOUR_THEME_ecl_search_form_wrapper');
+}
+
+/**
+ * Implements hook_libraries_info().
+ */
+function YOUR_CORE_FEATURE_libraries_info() {
+  $libraries['ecl'] = array(
+    'name' => 'EC Component Library',
+    'vendor url' => 'https://ec-europa.github.io/europa-component-library',
+    'download url' => 'https://github.com/ec-europa/europa-component-library/releases/tag/0.18.0',
+    'download file url' => 'https://github.com/ec-europa/europa-component-library/releases/download/0.18.0/framework.tar.gz',
+    'version callback' => 'YOUR_CORE_FEATURE_ecl_get_version',
+    'files' => array(
+      'css' => array(
+        'styles/europa.css',
+      ),
+    ),
+  );
+
+  return $libraries;
+}
+
+/**
+ * Return version for ECL library.
+ *
+ * @return string
+ */
+function YOUR_CORE_FEATURE_ecl_get_version() {
+  return '0.18.0';
+}
