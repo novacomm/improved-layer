@@ -29,7 +29,7 @@ function YOUR_CORE_FEATURE_form_nexteuropa_europa_search_search_form_alter(&$for
   // Set title for textfield.
   $form['search_input_group']['QueryText']['#attributes']['title'] = t('Search');
   // Set theme wrapper so to remove default div wrapper for textfield.
-  $form['search_input_group']['QueryText']['#theme_wrappers'] = array('YOUR_THEME_ecl_search_form_wrapper');
+  $form['search_input_group']['QueryText']['#theme_wrappers'] = array('ecl_search_form_wrapper');
 }
 
 /**

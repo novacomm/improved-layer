@@ -1,6 +1,144 @@
 <?php
 
 /**
+ * Implements template_preprocess_page().
+ */
+function YOUR_THEME_preprocess_page(&$variables) {
+
+  // Load ECL css.
+  libraries_load('ecl');
+
+  // Define menus and blocks for use in page.tpl.php.
+  $easy_breadcrumb = module_invoke('easy_breadcrumb', 'block_view', 'easy_breadcrumb');
+  $variables['easy_breadcrumb'] = render($easy_breadcrumb['content']);
+  $variables['language_selector'] = _YOUR_THEME_language_selector();
+  $search_form = drupal_get_form('nexteuropa_europa_search_search_form');
+  $variables['search_form'] = render($search_form);
+
+  $variables['ecl_menu_u'] = theme('links__ecl_menus', [
+    'links' => menu_navigation_links('user-menu'),
+    'attributes' => [
+      'id' => 'user-menu-links',
+      'class' => [
+        'ecl-navigation-list',
+        'ecl-navigation-list--small',
+      ],
+    ],
+    'heading' => [
+      'text' => t('User menu'),
+      'level' => 'h2',
+      'class' => ['ecl-u-sr-only'],
+    ],
+  ]);
+
+  $variables['ecl_menu_nsf'] = theme('links__ecl_menus', [
+    'links' => menu_navigation_links('menu-nexteuropa-site-links'),
+    'attributes' => [
+      'id' => 'ecl-site-switcher-footer',
+      'class' => ['ecl-footer__menu'],
+    ],
+    'heading' => [
+      'text' => t('European Commission'),
+      'level' => 'h4',
+      'class' => [
+        'ecl-h4',
+        'ecl-footer__title',
+      ],
+    ],
+  ]);
+
+  $variables['ecl_menu_nsh'] = theme('links__ecl_menus', [
+    'links' => menu_navigation_links('menu-nexteuropa-site-links'),
+    'attributes' => [
+      'id' => 'ecl-site-switcher-header',
+      'class' => [
+        'ecl-site-switcher__list',
+        'ecl-container',
+      ],
+    ],
+  ]);
+
+  $variables['ecl_menu_follow_us'] = theme('links__ecl_menus', [
+    'links' => menu_navigation_links('menu-ecl-follow-us'),
+    'attributes' => [
+      'id' => 'menu-ecl-follow-us',
+      'class' => [
+        'ecl-footer__menu',
+        'ecl-list--inline',
+        'ecl-footer__social-links',
+      ],
+    ],
+    'heading' => [
+      'text' => t('Follow us:'),
+      'level' => 'p',
+      'class' => [
+        'ecl-footer__label',
+      ],
+    ],
+  ]);
+
+  $variables['ecl_menu_contact'] = theme('links__ecl_menus', [
+    'links' => menu_navigation_links('menu-ecl-contact'),
+    'attributes' => [
+      'id' => 'menu-ecl-contact',
+      'class' => [
+        'ecl-footer__menu',
+        'ecl-list--unstyled',
+      ],
+    ],
+  ]);
+
+  $variables['ecl_menu_nsm'] = theme('links__ecl_menus', [
+    'links' => menu_navigation_links('menu-nexteuropa-social-media'),
+    'attributes' => [
+      'id' => 'menu-nexteuropa-social-media',
+      'class' => [
+        'ecl-footer__menu',
+        'ecl-list--inline',
+        'ecl-footer__social-links',
+      ],
+    ],
+    'heading' => [
+      'text' => t('Follow the European Commission'),
+      'level' => 'h4',
+      'class' => [
+        'ecl-h4',
+        'ecl-footer__title',
+      ],
+    ],
+  ]);
+
+  $variables['ecl_menu_nil'] = theme('links__ecl_menus', [
+    'links' => menu_navigation_links('menu-nexteuropa-inst-links'),
+    'attributes' => [
+      'id' => 'menu-nexteuropa-inst-links',
+      'class' => [
+        'ecl-footer__menu',
+      ],
+    ],
+    'heading' => [
+      'text' => t('European Union'),
+      'level' => 'h4',
+      'class' => [
+        'ecl-h4',
+        'ecl-footer__title',
+      ],
+    ],
+  ]);
+
+  $variables['ecl_menu_nsl'] = theme('links__ecl_menus', [
+    'links' => menu_navigation_links('menu-nexteuropa-service-links'),
+    'attributes' => [
+      'id' => 'menu-nexteuropa-service-links',
+      'class' => [
+        'ecl-list--inline',
+        'ecl-footer__menu',
+      ],
+    ],
+  ]);
+}
+
+/**
  * File contains theme functions for implementation of the Improved layer.
  */
 
@@ -9,7 +147,7 @@
  *
  * Load europa.css at the end.
  */
-function YOUR_THEME__css_alter(&$css) {
+function YOUR_THEME_css_alter(&$css) {
   foreach ($css as $css_key => $css_data) {
     if (strpos($css_key, 'ecl/styles/europa.css') !== FALSE) {
       $css[$css_key]['group'] = 300;
@@ -353,4 +491,30 @@ function _YOUR_THEME_ecl_menu_link_classes($attributes = array()) {
     }
     return $classes;
   }
+}
+
+/**
+ * Generate HTML for language selector.
+ *
+ * @return string
+ *    HTML.
+ */
+function _YOUR_THEME_language_selector() {
+  $content = language_selector_site_block_content();
+  // Initialize variables.
+  $code = '<span class="ecl-lang-select-sites__code">' .
+    '<span class="ecl-icon ecl-icon--language ecl-lang-select-sites__icon"></span>' .
+    '<span class="ecl-lang-select-sites__code-text">' . render($content['code']) . '</span>' .
+    '</span>';
+  $label = '<span class="ecl-lang-select-sites__label">' . render($content['label']) . '</span>';
+  $options = array(
+    'html' => TRUE,
+    'attributes' => array(
+      'class' => array('ecl-lang-select-sites__link'),
+    ),
+    'query' => array(drupal_get_destination()),
+  );
+
+  // Add content to block.
+  return l($label . $code, 'language-selector/site-language', $options);
 }
