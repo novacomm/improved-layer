@@ -7,7 +7,7 @@ function YOUR_CORE_FEATURE_update_7101() {
   // Please check and fix update number if necessary.
   module_enable(['nexteuropa_ecl_migrate']);
   // Create ECL menus.
-  _nexteuropa_ecl_migrate_blocks();
+  _nexteuropa_ecl_migrate_dt_menus();
   // Generate Contact and Follow us menus.
   $h_menus = array(
     array(
