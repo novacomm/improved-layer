@@ -176,7 +176,6 @@ function YOUR_THEME_ecl_search_form_wrapper($variables) {
   return $variables['element']['#children'];
 }
 
-
 /**
  * Implements theme_button().
  */
@@ -269,7 +268,6 @@ function YOUR_THEME_easy_breadcrumb($variables) {
   ];
 
   return theme('item_list', $items);
-
 }
 
 /**
@@ -412,7 +410,6 @@ function YOUR_THEME_links__ecl_menus($variables) {
   return $output;
 }
 
-
 /**
  * Implements theme_form().
  *
@@ -430,13 +427,13 @@ function YOUR_THEME_form($variables) {
   return '<form' . drupal_attributes($element['#attributes']) . '>' . $element['#children'] . '</form>';
 }
 
-
-
 /**
+ * Generate ECL classes.
+ *
  * @param array $attributes
  *    Menu attributes.
  *
- * return array
+ * @return array
  *    Menu link options.
  */
 function _YOUR_THEME_ecl_menu_link_classes($attributes = array()) {

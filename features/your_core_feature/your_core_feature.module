@@ -41,7 +41,7 @@ function YOUR_CORE_FEATURE_libraries_info() {
     'vendor url' => 'https://ec-europa.github.io/europa-component-library',
     'download url' => 'https://github.com/ec-europa/europa-component-library/releases/tag/0.18.0',
     'download file url' => 'https://github.com/ec-europa/europa-component-library/releases/download/0.18.0/framework.tar.gz',
-    'version callback' => 'YOUR_CORE_FEATURE_ecl_get_version',
+    'version callback' => '_YOUR_CORE_FEATURE_ecl_get_version',
     'files' => array(
       'css' => array(
         'styles/europa.css',
@@ -57,6 +57,6 @@ function YOUR_CORE_FEATURE_libraries_info() {
  *
  * @return string
  */
-function YOUR_CORE_FEATURE_ecl_get_version() {
+function _YOUR_CORE_FEATURE_ecl_get_version() {
   return '0.18.0';
 }
