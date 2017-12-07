@@ -22,3 +22,9 @@
 .ecl-container h4 {
   font-weight: 700;
 }
+.ecl-link:link,
+.ecl-link:visited,
+.ecl-link:hover,
+.ecl-link:active {
+  color: #004494 ;
+}
