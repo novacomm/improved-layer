@@ -228,6 +228,22 @@ function YOUR_THEME_easy_breadcrumb($variables) {
     ],
     'html' => TRUE
   ];
+  $breadcrumb_items = [];
+  $menu_breadcrumb = menu_tree_page_data('menu-breadcrumb-menu');
+  $i = 0;
+  foreach ($menu_breadcrumb as $item) {
+    $breadcrumb_item = [
+      'data' => l($item['link']['link_title'], $item['link']['link_path'], $link_options),
+      'class' => [
+        'ecl-breadcrumbs__segment',
+      ],
+    ];
+    if ($i == 0) {
+      $breadcrumb_item['class'][] = 'ecl-breadcrumbs__segment--first';
+    }
+    $breadcrumb_items[] = $breadcrumb_item;
+    $i++;
+  }
 
   if ($segments_quantity > 0) {
 
@@ -360,10 +376,14 @@ function YOUR_THEME_links__ecl_menus($variables) {
     $i = 1;
 
     $ecl_classes = _YOUR_THEME_ecl_menu_link_classes($attributes);
+    $remove_classes = ['btn', 'btn-info', 'btn-default'];
 
     foreach ($links as $link) {
       $class = $ecl_classes['li_class'];
-      $link['attributes']['class'] = $ecl_classes['a_class'];
+      $link['attributes']['class'] = isset($link['attributes']['class']) ? $link['attributes']['class'] : [];
+      $link['attributes']['class'] = array_diff($remove_classes, ['btn', 'btn-info', 'btn-default']);
+      $link['attributes']['class'] = array_merge($link['attributes']['class'], $ecl_classes['a_class']);
+
       $link['html'] = TRUE;
 
       // Add first, last and active classes to the list of links to help out
